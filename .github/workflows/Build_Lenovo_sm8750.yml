@@ -77,7 +77,7 @@ jobs:
               ;;
             "6.6.89")
               echo "os_patch_level=2025-06" >> $GITHUB_ENV
-              echo "releases=TB322FC_1.1.11.263" >> $GITHUB_ENV
+              echo "releases=TB322FC_1.5.10.138" >> $GITHUB_ENV
               ;;
             "6.6.102")
               echo "os_patch_level=2025-10" >> $GITHUB_ENV
@@ -666,7 +666,7 @@ jobs:
           rm -f boot_avb_tool.tar.gz && \
           cp ./common/out/arch/arm64/boot/Image ./boot_avb_tool/AOSP-Testkey-BootSigner-main/kernel
           cd boot_avb_tool/AOSP-Testkey-BootSigner-main && \
-          curl -L -o boot.img https://github.com/showdo/AOSP-Testkey-BootSigner/releases/download/${{ env.releases }}/boot.img
+          curl -L -o boot.img https://github.com/WJJ214453/AOSP-Testkey-BootSigner/releases/download/${{ env.releases }}/boot.img
           chmod +x ./tools/magiskboot
           ./tools/magiskboot repack boot.img
           rm -f ./boot.img kernel
