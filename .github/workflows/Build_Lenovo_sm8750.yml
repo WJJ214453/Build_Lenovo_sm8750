@@ -800,13 +800,13 @@ jobs:
         if: ${{ env.ENABLE_SIGNED == 'true' }}
         run: |
           cd kernel_workspace
-          aria2c -s16 -x16 -k1M "https://github.com/showdo/AOSP-Testkey-BootSigner/archive/refs/heads/main.tar.gz" -o boot_avb_tool.tar.gz && \
+          aria2c -s16 -x16 -k1M "https://github.com/WJJ214453/AOSP-Testkey-BootSigner/archive/refs/heads/main.tar.gz" -o boot_avb_tool.tar.gz && \
           mkdir -p boot_avb_tool && \
           tar -xzf boot_avb_tool.tar.gz -C boot_avb_tool && \
           rm -f boot_avb_tool.tar.gz && \
           cp ./common/out/arch/arm64/boot/Image ./boot_avb_tool/AOSP-Testkey-BootSigner-main/kernel
           cd boot_avb_tool/AOSP-Testkey-BootSigner-main && \
-          curl -L -o boot.img https://github.com/showdo/AOSP-Testkey-BootSigner/releases/download/${{ env.releases }}/boot.img
+          curl -L -o boot.img https://github.com/WJJ214453/AOSP-Testkey-BootSigner/releases/download/${{ env.releases }}/boot.img
           chmod +x ./tools/magiskboot
           ./tools/magiskboot repack boot.img
           rm -f ./boot.img kernel
