@@ -108,7 +108,7 @@ jobs:
               ;;
             "6.6.118")
               echo "os_patch_level=2026-01" >> $GITHUB_ENV
-              echo "releases=TB322FC_ZUXOS_1.5.10.213" >> $GITHUB_ENV
+              echo "releases=TB322FC_1.5.10.213" >> $GITHUB_ENV
               ;;
           esac
            if [ -z "${{ env.CUSTOM_KERNEL_SUFFIX }}" ]; then
