@@ -35,7 +35,7 @@ on:
       enable_ReKernel:
         description: "启用Re-Kernel支持"
         required: false
-        default: true
+        default: false
         type: boolean
       
       enable_Adios:
@@ -45,7 +45,7 @@ on:
         type: boolean
 
       enable_droidspaces:
-        description: "Droidspaces 容器支持（6.6推荐678槽位）"
+        description: "Droidspaces 容器支持（推荐678槽位）"
         required: true
         default: "678"
         type: choice
@@ -58,15 +58,9 @@ on:
       enable_droidspaces_ntsync:
         description: "启用 Droidspaces 容器 NTSync 支持（需启用 Droidspaces）"
         required: false
-        default: false
-        type: boolean
-
-      enable_kpm:
-        description: "启用KPM"
-        required: false
         default: true
         type: boolean
-      
+
       enable_susfs:
         description: "启用SUSFS"
         required: true
@@ -95,7 +89,6 @@ jobs:
       ENABLE_DROIDSPACES: ${{ github.event.inputs.enable_droidspaces }}
       ENABLE_DROIDSPACES_NTSYNC: ${{ github.event.inputs.enable_droidspaces_ntsync }}
       ENABLE_BBG: ${{ github.event.inputs.enable_bbg }}
-      ENABLE_KPM: ${{ github.event.inputs.enable_kpm }}
       ENABLE_SUSFS: ${{ github.event.inputs.enable_susfs }}
       ENABLE_SIGNED: ${{ github.event.inputs.enable_signed }}
     steps:
@@ -623,7 +616,6 @@ jobs:
 
           # ==================== KSU 配置 ====================
           echo "CONFIG_KSU=y" >> "$DEFCONFIG"
-          echo "CONFIG_KPM=y" >> "$DEFCONFIG"
 
           echo 'CONFIG_KSU_FULL_NAME_FORMAT="%TAG_NAME%-%COMMIT_SHA%-Re-TG@qdykernel"' >> "$DEFCONFIG"
 
@@ -818,17 +810,6 @@ jobs:
 
             core.info(`旧缓存清理完成，共删除 ${deleted} 个缓存`);
 
-      - name: 📦 Apply KPM and patch the kernel (应用KPM并修补内核)
-        if: ${{ env.ENABLE_KPM == 'true' }}
-        run: |
-          echo "正在应用KPM并修补内核..."
-          cd kernel_workspace/common/out/arch/arm64/boot
-          curl -LO https://github.com/ShirkNeko/SukiSU_KernelPatch_patch/releases/download/0.12.2/patch_linux
-          chmod +x patch_linux
-          ./patch_linux
-          rm -f Image
-          mv oImage Image
-          
       - name: 📦 ReName Image  (修改镜像名)
         run: |
           cd kernel_workspace/common/out/arch/arm64/boot
