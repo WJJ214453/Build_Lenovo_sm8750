@@ -45,9 +45,9 @@ on:
         type: boolean
 
       enable_droidspaces:
-        description: "Droidspaces 容器支持"
+        description: "Droidspaces 容器支持（6.6推荐678槽位）"
         required: true
-        default: "off"
+        default: "678"
         type: choice
         options:
           - "off"
