@@ -78,7 +78,7 @@ on:
 jobs:
   build:
     name: Build_${{ github.event.inputs.kernel_version }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     env:
       FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
       KERNEL_VERSION: ${{ github.event.inputs.kernel_version }}
@@ -231,7 +231,7 @@ jobs:
       - name: 🔎 Find public ccache in releases (查找公共缓存)
         id: public-ccache
         if: ${{ steps.ccache-restore.outputs.cache-matched-key == '' }}
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         env:
           PUBLIC_CACHE_REPO: ${{ vars.PUBLIC_CACHE_REPO }}
           PUBLIC_CACHE_TAG: ${{ vars.PUBLIC_CACHE_TAG }}
@@ -762,7 +762,7 @@ jobs:
 
       - name: 🧹 Clean old ccache (清理旧缓存)
         if: env.BUILD_TIME > 480
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         env:
           PREFIX: ccache-${{ env.KERNEL_VERSION }}${{ env.CACHE_VARIANT }}-
           CURRENT_KEY: ccache-${{ env.KERNEL_VERSION }}${{ env.CACHE_VARIANT }}-${{ github.run_id }}
@@ -849,11 +849,11 @@ jobs:
     name: Upload Re-Kernel Module
     if: ${{ github.event.inputs.enable_ReKernel == 'true' }}
     needs: build
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - name: 🔎 Find Re-Kernel module zip (查找Re-Kernel最新模块并下载)
         id: download-rekernel
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         env:
           KERNEL_MAJOR: "6.6"
         with:
